@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-lang="both">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>渡河：蓋達文西橋 — 手作建築夏令營</title>
+<title>渡河：蓋達文西橋 — 手作建築夏令營 | Bridge-Building Summer Camp 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,8 +13,6 @@
     --earth: #7a5c35;
     --stone: #b09070;
     --sand: #e8dcc8;
-    --sky: #c8dce8;
-    --water: #4a7a9b;
     --moss: #5a7a4a;
     --cream: #f5f0e8;
     --accent: #c4622d;
@@ -29,372 +27,170 @@
     overflow-x: hidden;
   }
 
+  /* ── LANGUAGE SWITCHING ── */
+  /* Default (both): show everything */
+  .zh, .en { display: revert; }
+
+  /* ZH mode: hide all .en elements */
+  [data-lang="zh"] .en { display: none !important; }
+
+  /* EN mode: hide all .zh elements */
+  [data-lang="en"] .zh { display: none !important; }
+
+  /* ── LANG TOGGLE ── */
+  .lang-toggle {
+    position: fixed;
+    top: 1.25rem; right: 1.25rem;
+    z-index: 100;
+    display: flex;
+    border: 1px solid rgba(176,144,112,0.5);
+    border-radius: 100px;
+    overflow: hidden;
+    background: rgba(26,18,8,0.88);
+    backdrop-filter: blur(8px);
+  }
+  .lang-toggle button {
+    background: none; border: none;
+    color: var(--stone);
+    font-size: 0.7rem; letter-spacing: 0.1em;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: all 0.2s;
+  }
+  .lang-toggle button.active { background: var(--accent); color: white; }
+
   /* ── HERO ── */
   .hero {
-    position: relative;
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
+    position: relative; min-height: 100vh;
+    display: grid; place-items: center;
     background: var(--ink);
-    overflow: hidden;
-    padding: 4rem 2rem;
+    overflow: hidden; padding: 4rem 2rem;
   }
-
   .hero-bg {
     position: absolute; inset: 0;
-    background:
-      repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 40px,
-        rgba(122,92,53,0.07) 40px,
-        rgba(122,92,53,0.07) 41px
-      );
+    background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(122,92,53,0.07) 40px, rgba(122,92,53,0.07) 41px);
   }
-
-  .river-line {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 180px;
-    background: linear-gradient(180deg, transparent 0%, #1e3a4a 60%, #142a38 100%);
-  }
-
-  .river-wave {
-    position: absolute;
-    bottom: 60px; left: -10%;
-    width: 120%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(74,122,155,0.6), rgba(200,220,232,0.8), rgba(74,122,155,0.6), transparent);
-    animation: waveFlow 6s ease-in-out infinite;
-  }
+  .river-line { position: absolute; bottom: 0; left: 0; right: 0; height: 180px; background: linear-gradient(180deg, transparent 0%, #1e3a4a 60%, #142a38 100%); }
+  .river-wave { position: absolute; bottom: 60px; left: -10%; width: 120%; height: 3px; background: linear-gradient(90deg, transparent, rgba(74,122,155,0.6), rgba(200,220,232,0.8), rgba(74,122,155,0.6), transparent); animation: waveFlow 6s ease-in-out infinite; }
   .river-wave:nth-child(2) { bottom: 80px; animation-delay: -2s; opacity: 0.5; }
   .river-wave:nth-child(3) { bottom: 100px; animation-delay: -4s; opacity: 0.3; }
+  @keyframes waveFlow { 0%, 100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(3%) scaleY(2); } }
+  .bridge-svg { position: absolute; bottom: 55px; left: 50%; transform: translateX(-50%); width: min(600px, 90vw); opacity: 0.25; }
 
-  @keyframes waveFlow {
-    0%, 100% { transform: translateX(0) scaleY(1); }
-    50% { transform: translateX(3%) scaleY(2); }
-  }
+  .hero-content { position: relative; text-align: center; z-index: 2; max-width: 820px; }
+  .hero-eyebrow { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.3em; color: var(--stone); text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+  .hero-eyebrow::before, .hero-eyebrow::after { content: ''; display: block; width: 40px; height: 1px; background: var(--stone); }
 
-  /* bridge silhouette */
-  .bridge-svg {
-    position: absolute;
-    bottom: 55px; left: 50%;
-    transform: translateX(-50%);
-    width: min(600px, 90vw);
-    opacity: 0.25;
-  }
-
-  .hero-content {
-    position: relative;
-    text-align: center;
-    z-index: 2;
-    max-width: 780px;
-  }
-
-  .hero-eyebrow {
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.35em;
-    color: var(--stone);
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    display: flex; align-items: center; justify-content: center; gap: 1rem;
-  }
-  .hero-eyebrow::before, .hero-eyebrow::after {
-    content: '';
-    display: block; width: 40px; height: 1px;
-    background: var(--stone);
-  }
-
-  .hero-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: clamp(3rem, 10vw, 6.5rem);
-    font-weight: 900;
-    color: var(--cream);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.25rem;
-  }
-
-  .hero-title-sub {
-    font-family: 'DM Serif Display', serif;
-    font-style: italic;
-    font-size: clamp(1rem, 3vw, 1.6rem);
-    color: var(--stone);
-    margin-bottom: 2.5rem;
-    letter-spacing: 0.05em;
-  }
-
-  .hero-tagline {
-    font-size: clamp(0.9rem, 2vw, 1.05rem);
-    color: rgba(245,240,232,0.7);
-    max-width: 480px;
-    margin: 0 auto 3rem;
-    line-height: 1.8;
-  }
-
-  .hero-badges {
-    display: flex; flex-wrap: wrap; gap: 0.75rem;
-    justify-content: center;
-  }
-
-  .badge {
-    border: 1px solid rgba(176,144,112,0.4);
-    color: var(--stone);
-    padding: 0.4rem 1.1rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    border-radius: 100px;
-  }
+  .hero-title-zh { font-family: 'Noto Serif TC', serif; font-size: clamp(3rem, 10vw, 6.5rem); font-weight: 900; color: var(--cream); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+  .hero-title-en { font-family: 'DM Serif Display', serif; font-style: italic; font-size: clamp(2rem, 7vw, 5rem); font-weight: 400; color: var(--cream); line-height: 1.1; margin-bottom: 0.25rem; }
+  .hero-subtitle { font-family: 'DM Serif Display', serif; font-style: italic; font-size: clamp(1rem, 3vw, 1.6rem); color: var(--stone); margin-bottom: 2.5rem; letter-spacing: 0.05em; }
+  .hero-tagline { font-size: clamp(0.85rem, 1.8vw, 1rem); color: rgba(245,240,232,0.7); max-width: 500px; margin: 0 auto 3rem; line-height: 1.85; }
+  .hero-tagline.en { font-style: italic; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+  .badge { border: 1px solid rgba(176,144,112,0.4); color: var(--stone); padding: 0.4rem 1.1rem; font-size: 0.8rem; letter-spacing: 0.08em; border-radius: 100px; }
 
   /* ── SECTION COMMON ── */
   .section { padding: 6rem 2rem; }
-  .container { max-width: 820px; margin: 0 auto; }
-  .section-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 500;
-    margin-bottom: 1rem;
-    display: flex; align-items: center; gap: 0.75rem;
-  }
-  .section-label::after {
-    content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent);
-  }
-  h2 {
-    font-family: 'Noto Serif TC', serif;
-    font-size: clamp(1.6rem, 4vw, 2.5rem);
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 1.5rem;
-    color: var(--ink);
-  }
+  .container { max-width: 880px; margin: 0 auto; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); }
+
+  h2 { font-family: 'Noto Serif TC', serif; font-size: clamp(1.6rem, 4vw, 2.5rem); font-weight: 700; line-height: 1.3; margin-bottom: 1.5rem; color: var(--ink); }
+  h2.en { font-family: 'DM Serif Display', serif; font-style: italic; font-weight: 400; font-size: clamp(1.4rem, 3.5vw, 2.2rem); }
   p { color: #3a3020; font-size: 1rem; margin-bottom: 1rem; }
+  p.en { font-style: italic; color: #7a6a5a; font-size: 0.92rem; }
+
+  /* ── BILINGUAL PAIR (two columns in "both" mode) ── */
+  .bi-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 4rem; align-items: start; }
+  [data-lang="zh"] .bi-pair,
+  [data-lang="en"] .bi-pair { grid-template-columns: 1fr; }
+  @media (max-width: 640px) { .bi-pair { grid-template-columns: 1fr !important; } }
 
   /* ── INTRO ── */
   .intro { background: var(--cream); }
-  .intro-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-    margin-top: 3rem;
-  }
-  @media (max-width: 640px) { .intro-grid { grid-template-columns: 1fr; gap: 2rem; } }
-  .intro-quote {
-    font-family: 'Noto Serif TC', serif;
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    font-weight: 600;
-    line-height: 1.6;
-    color: var(--earth);
-    padding-left: 1.5rem;
-    border-left: 3px solid var(--accent);
-    margin-bottom: 2rem;
-  }
+  .intro-quote { font-family: 'Noto Serif TC', serif; font-size: clamp(1.05rem, 2.2vw, 1.3rem); font-weight: 600; line-height: 1.6; color: var(--earth); padding-left: 1.5rem; border-left: 3px solid var(--accent); margin-bottom: 1.5rem; }
+  .intro-quote.en { font-family: 'DM Serif Display', serif; font-style: italic; font-weight: 400; font-size: clamp(0.95rem, 2vw, 1.15rem); color: rgba(122,92,53,0.8); border-left-color: rgba(196,98,45,0.35); }
 
   /* ── HIGHLIGHTS ── */
   .highlights { background: var(--ink); color: var(--cream); }
-  .highlights h2 { color: var(--cream); }
-  .highlights p { color: rgba(245,240,232,0.7); }
-  .highlights .section-label { color: var(--stone); }
-  .highlights .section-label::after { background: var(--stone); }
-
-  .highlight-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
-    margin-top: 3rem;
-    background: rgba(176,144,112,0.15);
-    border: 1px solid rgba(176,144,112,0.15);
-  }
-  @media (max-width: 580px) { .highlight-grid { grid-template-columns: 1fr; } }
-
-  .highlight-item {
-    padding: 2.5rem 2rem;
-    background: var(--ink);
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s;
-  }
-  .highlight-item:hover { background: #221a0e; }
-
-  .highlight-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 4rem;
-    color: rgba(122,92,53,0.2);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-  .highlight-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cream);
-    margin-bottom: 0.75rem;
-  }
+  .highlights h2, .highlights h2.en { color: var(--cream); }
+  .highlight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
+  .highlight-item { border-top: 1px solid rgba(176,144,112,0.2); padding-top: 1.5rem; }
+  .highlight-num { display: block; font-family: 'DM Serif Display', serif; font-size: 2.5rem; color: rgba(176,144,112,0.3); line-height: 1; margin-bottom: 0.75rem; }
+  .highlight-title { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; color: var(--cream); margin-bottom: 0.75rem; }
+  .highlight-title.en { font-family: 'DM Serif Display', serif; font-style: italic; font-weight: 400; font-size: 1rem; }
+  .highlights p { color: rgba(245,240,232,0.65); font-size: 0.9rem; }
+  .highlights p.en { color: rgba(176,144,112,0.6); font-size: 0.85rem; }
 
   /* ── WHO ── */
   .who { background: var(--sand); }
-  .who-card {
-    background: white;
-    border-radius: 2px;
-    padding: 2.5rem;
-    margin-top: 2.5rem;
-    border-top: 3px solid var(--accent);
-    box-shadow: 0 4px 40px rgba(26,18,8,0.06);
-  }
-  .who-list {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.25rem;
-    margin-top: 1.5rem;
-  }
-  .who-list li {
-    display: flex; gap: 0.75rem; align-items: flex-start;
-    font-size: 0.95rem; color: #3a3020;
-  }
-  .who-list li::before {
-    content: '◆';
-    color: var(--accent);
-    font-size: 0.5rem;
-    margin-top: 0.5rem;
-    flex-shrink: 0;
-  }
-
-  /* ── DATES ── */
-  .dates { background: var(--cream); }
-  .dates-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-  @media (max-width: 580px) { .dates-grid { grid-template-columns: 1fr; } }
-
-  .date-card {
-    border: 1px solid rgba(122,92,53,0.25);
-    padding: 2rem;
-    position: relative;
-    background: white;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .date-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 6px 30px rgba(196,98,45,0.1);
-  }
-
-  .date-badge {
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    padding: 0.25rem 0.75rem;
-    margin-bottom: 1rem;
-    font-weight: 500;
-  }
-  .date-main {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 0.25rem;
-  }
-  .date-extra {
-    font-size: 0.85rem;
-    color: var(--earth);
-    margin-bottom: 0;
-  }
-  .date-note {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--sand);
-    font-size: 0.8rem;
-    color: #7a6a5a;
-    margin-bottom: 0;
-  }
+  .who-card { background: white; padding: 2.5rem; margin-top: 2rem; }
+  .who-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; margin-top: 1.25rem; }
+  @media (max-width: 600px) { .who-list { grid-template-columns: 1fr; } }
+  .who-list li { padding-left: 1.25rem; position: relative; font-size: 0.95rem; }
+  .who-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
 
   /* ── LOCATION ── */
-  .location-strip {
-    background: var(--moss);
-    color: white;
-    padding: 3rem 2rem;
-    text-align: center;
-  }
-  .location-strip .label { color: rgba(255,255,255,0.6); font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .location-strip .place { font-family: 'Noto Serif TC', serif; font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; }
-  .location-strip .desc { margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 0; }
+  .location-strip { background: var(--moss); color: white; padding: 3rem 2rem; text-align: center; }
+  .loc-label { color: rgba(255,255,255,0.6); font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .loc-place { font-family: 'Noto Serif TC', serif; font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; }
+  .loc-place.en { font-family: 'DM Serif Display', serif; font-style: italic; font-weight: 400; }
+  .loc-desc { margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+  .loc-desc.en { font-style: italic; font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+
+  /* ── DATES ── */
+  .dates-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+  .date-card { border: 1px solid rgba(122,92,53,0.2); padding: 2rem; }
+  .date-badge { display: inline-block; background: var(--accent); color: white; font-size: 0.75rem; letter-spacing: 0.1em; padding: 0.25rem 0.75rem; margin-bottom: 1rem; }
+  .date-main { font-family: 'Noto Serif TC', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .date-main.en { font-family: 'DM Serif Display', serif; font-style: italic; font-weight: 400; font-size: 1.3rem; color: var(--earth); }
+  .date-extra { font-size: 0.85rem; color: var(--stone); margin-bottom: 0.75rem; }
+  .date-note { font-size: 0.85rem; color: #7a6a5a; margin-bottom: 0; }
+  .date-note.en { font-style: italic; color: #9a8a7a; font-size: 0.82rem; }
+
+  /* ── REGISTER ── */
+  .register-section { background: var(--sand); padding: 4rem 2rem; border-top: 1px solid rgba(122,92,53,0.15); }
+  .register-box { max-width: 700px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  @media (max-width: 600px) { .register-box { grid-template-columns: 1fr; } }
+  .reg-title { font-family: 'Noto Serif TC', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .reg-title.en { font-family: 'DM Serif Display', serif; font-style: italic; font-weight: 400; font-size: 1.3rem; color: var(--earth); }
+  .register-btn { display: block; background: var(--accent); color: white; padding: 0.9rem 2rem; font-family: 'Noto Sans TC', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.1em; text-decoration: none; transition: background 0.2s, transform 0.2s; text-align: center; margin-bottom: 0.75rem; }
+  .register-btn:hover { background: #a8521e; transform: translateY(-2px); }
+  .register-url { font-size: 0.75rem; color: var(--stone); word-break: break-all; text-align: center; }
 
   /* ── CTA ── */
-  .cta-section {
-    background: var(--ink);
-    padding: 6rem 2rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-section::before {
-    content: '渡河';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Noto Serif TC', serif;
-    font-size: 20vw;
-    font-weight: 900;
-    color: rgba(255,255,255,0.02);
-    white-space: nowrap;
-    pointer-events: none;
-  }
-  .cta-section h2 { color: var(--cream); position: relative; z-index: 1; }
+  .cta-section { background: var(--ink); padding: 6rem 2rem; text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: '渡河'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Noto Serif TC', serif; font-size: 20vw; font-weight: 900; color: rgba(255,255,255,0.02); white-space: nowrap; pointer-events: none; }
+  [data-lang="en"] .cta-section::before { content: 'CROSS'; font-family: 'DM Serif Display', serif; }
+  .cta-section h2, .cta-section h2.en { color: var(--cream); position: relative; z-index: 1; }
   .cta-section p { color: rgba(245,240,232,0.6); position: relative; z-index: 1; max-width: 500px; margin: 0 auto 2.5rem; }
-
-  .cta-btn {
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    padding: 1rem 3rem;
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    position: relative; z-index: 1;
-    transition: background 0.2s, transform 0.2s;
-    border: none; cursor: pointer;
-  }
+  .cta-section p.en { color: rgba(176,144,112,0.55); font-style: italic; }
+  .cta-btn { display: inline-block; background: var(--accent); color: white; padding: 1rem 3rem; font-family: 'Noto Sans TC', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.1em; text-decoration: none; position: relative; z-index: 1; transition: background 0.2s, transform 0.2s; }
   .cta-btn:hover { background: #a8521e; transform: translateY(-2px); }
+  .cta-link { display: block; margin-top: 1.25rem; font-size: 0.8rem; color: var(--stone); position: relative; z-index: 1; }
 
-  .cta-link {
-    display: block;
-    margin-top: 1.25rem;
-    font-size: 0.8rem;
-    color: var(--stone);
-    letter-spacing: 0.1em;
-    position: relative; z-index: 1;
-  }
+  /* ── COMPANY & CONTACT ── */
+  .company-section { background: #0f0c06; color: rgba(245,240,232,0.75); padding: 4rem 2rem; }
+  .company-grid { max-width: 820px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  @media (max-width: 600px) { .company-grid { grid-template-columns: 1fr; gap: 2rem; } }
+  .company-block-label { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; font-weight: 500; }
+  .company-name { font-family: 'Noto Serif TC', serif; font-size: 1.4rem; font-weight: 700; color: var(--cream); margin-bottom: 0.35rem; }
+  .company-name.en { font-family: 'DM Serif Display', serif; font-style: italic; font-weight: 400; }
+  .company-detail { font-size: 0.88rem; color: rgba(245,240,232,0.5); line-height: 1.9; }
+  .contact-item { display: flex; gap: 0.75rem; margin-bottom: 1rem; align-items: flex-start; }
+  .contact-icon { width: 28px; height: 28px; border: 1px solid rgba(176,144,112,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.15rem; font-size: 0.75rem; color: var(--stone); }
+  .contact-label { font-size: 0.7rem; color: var(--stone); letter-spacing: 0.1em; text-transform: uppercase; }
+  .contact-value { font-size: 0.92rem; color: var(--cream); }
+  .contact-value a { color: var(--stone); text-decoration: none; }
+  .contact-value a:hover { color: var(--cream); }
 
   /* ── FOOTER ── */
-  footer {
-    background: #0f0c06;
-    color: rgba(245,240,232,0.35);
-    text-align: center;
-    padding: 2rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-  }
+  footer { background: #080603; color: rgba(245,240,232,0.22); text-align: center; padding: 1.5rem 2rem; font-size: 0.72rem; letter-spacing: 0.05em; }
 
   /* ── ANIMATION ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .hero-content > * {
-    animation: fadeUp 0.8s ease both;
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-content > * { animation: fadeUp 0.8s ease both; }
   .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
   .hero-content > *:nth-child(2) { animation-delay: 0.25s; }
   .hero-content > *:nth-child(3) { animation-delay: 0.35s; }
@@ -404,6 +200,12 @@
 </head>
 <body>
 
+<div class="lang-toggle">
+  <button class="active" onclick="setLang('both',this)">中英</button>
+  <button onclick="setLang('zh',this)">中文</button>
+  <button onclick="setLang('en',this)">EN</button>
+</div>
+
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-bg"></div>
@@ -411,8 +213,6 @@
   <div class="river-wave"></div>
   <div class="river-wave"></div>
   <div class="river-wave"></div>
-
-  <!-- Bridge silhouette -->
   <svg class="bridge-svg" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="0" y1="90" x2="600" y2="90" stroke="white" stroke-width="2"/>
     <path d="M80 90 Q300 10 520 90" stroke="white" stroke-width="2.5" fill="none"/>
@@ -424,137 +224,246 @@
     <line x1="370" y1="90" x2="367" y2="23" stroke="white" stroke-width="1.5" opacity="0.6"/>
     <line x1="450" y1="90" x2="435" y2="47" stroke="white" stroke-width="1.5" opacity="0.6"/>
   </svg>
-
   <div class="hero-content">
-    <div class="hero-eyebrow">2026 花蓮手作建築夏令營</div>
-    <h1 class="hero-title">渡河</h1>
-    <div class="hero-title-sub">蓋達文西橋</div>
-    <p class="hero-tagline">
-      用雙手搭起一座真實的橋。在花蓮的山水之間，孩子將親身體驗工程師的思維，從設計到施工，完成一件真正的作品。
-    </p>
+    <div class="hero-eyebrow">
+      <span class="zh">2026 花蓮手作建築夏令營</span>
+      <span class="en">2026 Hualien Architecture Camp</span>
+    </div>
+    <div class="hero-title-zh zh">渡河</div>
+    <div class="hero-title-en en">Crossing the River</div>
+    <div class="hero-subtitle">
+      <span class="zh">蓋達文西橋</span><span class="en">Building a Da Vinci Bridge</span>
+    </div>
+    <p class="hero-tagline zh">用雙手搭起一座真實的橋。在花蓮的山水之間，孩子將親身體驗工程師的思維，從設計到施工，完成一件真正的作品。</p>
+    <p class="hero-tagline en">Build a real bridge with your own hands. Amid the mountains and rivers of Hualien, young builders experience an engineer's mindset — from design through construction — completing a genuine work.</p>
     <div class="hero-badges">
-      <span class="badge">10 – 18 歲</span>
-      <span class="badge">花蓮</span>
-      <span class="badge">戶外全程實作</span>
-      <span class="badge">兩梯次開放報名</span>
+      <span class="badge zh">10 – 18 歲</span>
+      <span class="badge en">Ages 10–18</span>
+      <span class="badge zh">花蓮</span>
+      <span class="badge en">Hualien</span>
+      <span class="badge zh">戶外全程實作</span>
+      <span class="badge en">Outdoor Hands-On</span>
+      <span class="badge zh">兩梯次開放報名</span>
+      <span class="badge en">2 Sessions</span>
     </div>
   </div>
 </section>
+
 
 <!-- ── INTRO ── -->
 <section class="section intro">
   <div class="container">
-    <div class="section-label">關於本營隊</div>
-    <h2>不只是紙上談兵，<br>而是真正地「建造」</h2>
-    <div class="intro-grid">
-      <div>
+    <div class="section-label">
+      <span class="zh">關於本營隊</span><span class="en">About the Camp</span>
+    </div>
+    <h2 class="zh">不只是紙上談兵，<br>而是真正地「建造」</h2>
+    <h2 class="en">Not theory on paper —<br>actual construction.</h2>
+    <div class="bi-pair" style="margin-top:2.5rem;">
+      <div class="zh">
         <p class="intro-quote">「達文西橋」源自文藝復興時期的工程天才達文西，一座無需釘子、純靠結構力學咬合的木橋。</p>
         <p>在這五天的營隊中，孩子將從零開始，理解橋梁的受力原理，親手丈量、切割、組裝，最終完成一座真實可站立的達文西橋，橫跨水面之上。</p>
         <p>這不是模型，也不是展示品——而是孩子用自己的雙手完成的建築。</p>
+        <p>手作建築的過程涵蓋物理、數學與工程思維，但學習發生在行動之中，而非課本之上。完工的那一刻，是屬於他們自己的成就感——難以取代，也難以忘懷。</p>
       </div>
-      <div>
-        <p>手作建築的過程涵蓋物理、數學與工程思維，但學習發生在行動之中，而非課本之上。孩子在花蓮的自然環境裡做中學，感受自然材料的重量與韌性，培養空間判斷力與問題解決的能力。</p>
-        <p>完工的那一刻，是屬於他們自己的成就感——難以取代，也難以忘懷。</p>
+      <div class="en">
+        <p class="intro-quote en">The Da Vinci Bridge originates from Renaissance genius Leonardo da Vinci — a wooden bridge held together purely by structural interlocking, without a single nail.</p>
+        <p class="en">Over five days, campers start from scratch: grasping load-bearing principles, measuring, cutting, and assembling until a real, weight-bearing bridge spans the water.</p>
+        <p class="en">This is not a model or a display piece — it is architecture completed by young hands.</p>
+        <p class="en">The process weaves physics, mathematics, and engineering into action rather than textbooks. The moment of completion belongs entirely to them — irreplaceable, unforgettable.</p>
       </div>
     </div>
   </div>
 </section>
+
 
 <!-- ── HIGHLIGHTS ── -->
 <section class="section highlights">
   <div class="container">
-    <div class="section-label">營隊亮點</div>
-    <h2>為什麼選擇<br>這個營隊？</h2>
+    <div class="section-label"><span class="zh">營隊亮點</span><span class="en">Highlights</span></div>
+    <h2 class="zh">為什麼選擇<br>這個營隊？</h2>
+    <h2 class="en">Why choose<br>this camp?</h2>
     <div class="highlight-grid">
       <div class="highlight-item">
         <span class="highlight-num">01</span>
-        <div class="highlight-title">真實建造一座橋</div>
-        <p>從設計、備料、施工到完工，孩子全程親身參與，最終完成一座可承重、可渡河的達文西橋。不是工藝課，是真正的工程。</p>
+        <div class="highlight-title zh">真實建造一座橋</div>
+        <div class="highlight-title en">Build a Real Bridge</div>
+        <p class="zh">從設計、備料、施工到完工，孩子全程親身參與，最終完成一座可承重、可渡河的達文西橋。不是工藝課，是真正的工程。</p>
+        <p class="en">From design to materials to construction, campers are involved every step — completing a load-bearing Da Vinci Bridge. Not a craft class; real engineering.</p>
       </div>
       <div class="highlight-item">
         <span class="highlight-num">02</span>
-        <div class="highlight-title">了解科學原理</div>
-        <p>橋梁為什麼不會垮？力是怎麼傳遞的？課程將物理、力學與幾何融入實作，讓孩子在動手的過程中自然理解原理。</p>
+        <div class="highlight-title zh">了解科學原理</div>
+        <div class="highlight-title en">Learn the Science</div>
+        <p class="zh">橋梁為什麼不會垮？力是怎麼傳遞的？課程將物理、力學與幾何融入實作，讓孩子在動手的過程中自然理解原理。</p>
+        <p class="en">Why doesn't a bridge collapse? How does force travel? Physics, mechanics, and geometry are woven into hands-on work so understanding emerges naturally.</p>
       </div>
       <div class="highlight-item">
         <span class="highlight-num">03</span>
-        <div class="highlight-title">高師生比，深度陪伴</div>
-        <p>小組制、高師生比的設計，確保每位孩子都能獲得充分的關注與指導，遇到困難時有人一起思考、一起解決。</p>
+        <div class="highlight-title zh">高師生比，深度陪伴</div>
+        <div class="highlight-title en">Small Groups, Deep Mentorship</div>
+        <p class="zh">小組制、高師生比的設計，確保每位孩子都能獲得充分的關注與指導，遇到困難時有人一起思考、一起解決。</p>
+        <p class="en">Small-group design with high instructor-to-student ratios ensures every child receives full attention. When problems arise, a mentor thinks and solves alongside them.</p>
       </div>
       <div class="highlight-item">
         <span class="highlight-num">04</span>
-        <div class="highlight-title">花蓮山水中的戶外學習</div>
-        <p>走出教室，在花蓮的自然環境中實作。戶外的學習場域讓孩子以全身感知尺度與空間，也在自然中培養專注與韌性。</p>
+        <div class="highlight-title zh">花蓮山水中的戶外學習</div>
+        <div class="highlight-title en">Outdoor Learning in Hualien</div>
+        <p class="zh">走出教室，在花蓮的自然環境中實作。戶外的學習場域讓孩子以全身感知尺度與空間，也在自然中培養專注與韌性。</p>
+        <p class="en">Step out of the classroom and build within Hualien's natural landscape. The outdoor setting develops spatial awareness, focus, and resilience through the whole body.</p>
       </div>
     </div>
   </div>
 </section>
 
+
 <!-- ── WHO ── -->
 <section class="section who">
   <div class="container">
-    <div class="section-label">適合對象</div>
-    <h2>哪些孩子適合<br>參加這個營隊？</h2>
+    <div class="section-label"><span class="zh">適合對象</span><span class="en">Who Should Join</span></div>
+    <h2 class="zh">哪些孩子適合<br>參加這個營隊？</h2>
+    <h2 class="en">Which young people<br>will thrive here?</h2>
     <div class="who-card">
-      <p>本營隊開放 <strong>10 至 18 歲</strong>的青少年報名，歡迎各類背景的孩子參與，不需要任何工程或建築的先備知識。以下特質的孩子尤其能從中獲益：</p>
+      <p class="zh">本營隊開放 <strong>10 至 18 歲</strong>的青少年報名，不需要任何工程或建築的先備知識。以下特質的孩子尤其能從中獲益：</p>
+      <p class="en">Open to youth <strong>ages 10–18</strong>. No prior engineering or architecture knowledge needed. The following young people will especially benefit:</p>
       <ul class="who-list">
-        <li>對動手做、製作、拆解有興趣的孩子</li>
-        <li>喜歡戶外活動，想在自然中學習的孩子</li>
-        <li>對科學、物理、結構有好奇心的孩子</li>
-        <li>想體驗真實工程挑戰的孩子</li>
-        <li>希望在暑假留下一件真實作品的孩子</li>
-        <li>想認識同樣熱愛探索的新朋友</li>
+        <li><span class="zh">對動手做、製作、拆解有興趣的孩子</span><span class="en">Those who love making, building, or taking things apart</span></li>
+        <li><span class="zh">喜歡戶外活動，想在自然中學習的孩子</span><span class="en">Those who enjoy the outdoors and learning in nature</span></li>
+        <li><span class="zh">對科學、物理、結構有好奇心的孩子</span><span class="en">Those curious about science, physics, and structures</span></li>
+        <li><span class="zh">想體驗真實工程挑戰的孩子</span><span class="en">Those who want to take on a real engineering challenge</span></li>
+        <li><span class="zh">希望在暑假留下一件真實作品的孩子</span><span class="en">Those who want to leave the summer with something real</span></li>
+        <li><span class="zh">想認識同樣熱愛探索的新朋友</span><span class="en">Those looking to meet fellow curious, adventurous minds</span></li>
       </ul>
     </div>
   </div>
 </section>
 
+
 <!-- ── LOCATION ── -->
 <div class="location-strip">
-  <div class="label">營隊地點</div>
-  <div class="place">花蓮</div>
-  <div class="desc">在台灣最壯麗的山海之間，展開一場真實的工程探險。</div>
+  <div class="loc-label"><span class="zh">營隊地點</span><span class="en">Location</span></div>
+  <div class="loc-place zh">花蓮</div>
+  <div class="loc-place en">Hualien, Taiwan</div>
+  <div class="loc-desc zh">在台灣最壯麗的山海之間，展開一場真實的工程探險。</div>
+  <div class="loc-desc en">A genuine engineering adventure amid Taiwan's most magnificent mountains and sea.</div>
 </div>
+
 
 <!-- ── DATES ── -->
 <section class="section dates">
   <div class="container">
-    <div class="section-label">梯次資訊</div>
-    <h2>2026 年夏令營梯次</h2>
-    <p>本年度開放兩梯次報名，歡迎依孩子的行程選擇合適梯次。喜歡花蓮的孩子，也可選擇延住，深度體驗當地。</p>
+    <div class="section-label"><span class="zh">梯次資訊</span><span class="en">Session Dates</span></div>
+    <h2 class="zh">2026 年夏令營梯次</h2>
+    <h2 class="en">2026 Summer Camp Sessions</h2>
+    <p class="zh">本年度開放兩梯次報名，歡迎依孩子的行程選擇合適梯次。</p>
+    <p class="en">Two sessions available this year — choose the one that fits your schedule.</p>
     <div class="dates-grid">
       <div class="date-card">
-        <span class="date-badge">第三梯次</span>
-        <div class="date-main">7 月 16 日 – 20 日</div>
-        <div class="date-extra">正式課程共五天</div>
-        <p class="date-note">可選擇續住至 7 月 23 日，讓孩子在田野自由探索。</p>
+        <span class="date-badge"><span class="zh">第三梯次</span><span class="en">Session 3</span></span>
+        <div class="date-main zh">7 月 16 日 – 20 日</div>
+        <div class="date-main en">July 16 – 20</div>
+        <div class="date-extra"><span class="zh">正式課程共五天</span><span class="en">Five-day programme</span></div>
+        <p class="date-note zh">可選擇續住至 7 月 23 日，讓孩子在田野自由探索。</p>
+        <p class="date-note en">Optional extended stay through July 23 for free exploration.</p>
       </div>
       <div class="date-card">
-        <span class="date-badge">第二梯次</span>
-        <div class="date-main">7 月 27 日 – 31 日</div>
-        <div class="date-extra">正式課程共五天</div>
-        <p class="date-note">可選擇續住至 8 月 3 日，讓孩子在田野自由探索。</p>
+        <span class="date-badge"><span class="zh">第二梯次</span><span class="en">Session 2</span></span>
+        <div class="date-main zh">7 月 27 日 – 31 日</div>
+        <div class="date-main en">July 27 – 31</div>
+        <div class="date-extra"><span class="zh">正式課程共五天</span><span class="en">Five-day programme</span></div>
+        <p class="date-note zh">可選擇續住至 8 月 3 日，讓孩子在田野自由探索。</p>
+        <p class="date-note en">Optional extended stay through August 3 for free exploration.</p>
       </div>
     </div>
     <p style="margin-top:1.5rem; font-size:0.85rem; color:#7a6a5a;">
-      ＊ 各梯次名額有限，建議提早確認報名。詳情請參閱課程手冊。
+      <span class="zh">＊ 各梯次名額有限，建議提早報名。詳情請參閱課程手冊。</span>
+      <span class="en">＊ Places are limited — register early to secure a spot. See the programme guide for full details.</span>
     </p>
   </div>
 </section>
 
+
+<!-- ── REGISTER ── -->
+<div class="register-section">
+  <div class="register-box">
+    <div>
+      <div class="section-label"><span class="zh">立即報名</span><span class="en">Register Now</span></div>
+      <div class="reg-title zh">加入候補名單</div>
+      <div class="reg-title en">Join the waiting list</div>
+      <p class="zh" style="font-size:0.88rem; color:#7a6a5a;">名額有限，即早報名以確保孩子的位置。</p>
+      <p class="en" style="font-size:0.88rem; color:#7a6a5a;">Spots are limited — sign up early to secure a place.</p>
+    </div>
+    <div>
+      <a class="register-btn" href="https://canva.link/073uyrzy7flbmmy" target="_blank">
+        <span class="zh">閱讀課程手冊 / 立即報名</span>
+        <span class="en">View Programme Guide &amp; Register</span>
+      </a>
+      <div class="register-url">canva.link/073uyrzy7flbmmy</div>
+    </div>
+  </div>
+</div>
+
+
 <!-- ── CTA ── -->
 <section class="cta-section">
   <div class="container">
-    <h2>讓孩子帶著一座橋<br>回家</h2>
-    <p>這個暑假，給孩子一次真實的建造經驗。詳細課程內容、費用與報名辦法，請參閱完整課程手冊。</p>
-    <a class="cta-btn" href="https://canva.link/073uyrzy7flbmmy" target="_blank">閱讀完整課程手冊</a>
-    <div class="cta-link">下載後可與孩子一起閱讀，討論是否適合參加</div>
+    <h2 class="zh">讓孩子帶著一座橋<br>回家</h2>
+    <h2 class="en">Let them bring<br>a bridge home.</h2>
+    <p class="zh">這個暑假，給孩子一次真實的建造經驗。詳細課程內容、費用與報名辦法，請參閱完整課程手冊。</p>
+    <p class="en">This summer, give them a real construction experience. Full curriculum, fees, and registration in the programme guide.</p>
+    <a class="cta-btn" href="https://canva.link/073uyrzy7flbmmy" target="_blank">
+      <span class="zh">閱讀完整課程手冊</span>
+      <span class="en">View Full Programme Guide</span>
+    </a>
+    <div class="cta-link">
+      <span class="zh">下載後可與孩子一起閱讀，討論是否適合參加</span>
+      <span class="en">Download and read together with your child</span>
+    </div>
   </div>
 </section>
 
+
+<!-- ── COMPANY & CONTACT ── -->
+<div class="company-section">
+  <div class="company-grid">
+    <div>
+      <div class="company-block-label"><span class="zh">主辦單位</span><span class="en">Organiser</span></div>
+      <div class="company-name zh">大王公司</div>
+      <div class="company-name en">Dawang Company</div>
+      <div class="company-detail zh">📍 花蓮縣壽豐鄉中正路</div>
+      <div class="company-detail en">📍 Zhongzheng Rd, Shoufeng, Hualien County</div>
+    </div>
+    <div>
+      <div class="company-block-label"><span class="zh">聯絡我們</span><span class="en">Contact Us</span></div>
+      <div class="contact-item">
+        <div class="contact-icon">☎</div>
+        <div>
+          <div class="contact-label"><span class="zh">電話</span><span class="en">Phone</span></div>
+          <div class="contact-value">1234567</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-label"><span class="zh">電子郵件</span><span class="en">Email</span></div>
+          <div class="contact-value"><a href="mailto:b@bv.com">b@bv.com</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <footer>
-  渡河：蓋達文西橋 ｜ 2026 花蓮手作建築夏令營 ｜ 10–18 歲
+  渡河：蓋達文西橋 · Crossing the River: Da Vinci Bridge · 2026 花蓮手作建築夏令營 · Ages 10–18 · 大王公司
 </footer>
+
+<script>
+  function setLang(mode, btn) {
+    document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.documentElement.setAttribute('data-lang', mode);
+  }
+</script>
 
 </body>
 </html>
